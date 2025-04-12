@@ -1,10 +1,10 @@
 import Image from 'next/image'
-import authorImage from '@/public/images/author/ziad-t-2.jpg'
+import authorImage from '@/public/images/author/ziad-t-3.jpg'
 
 export default function Intro() {
   return (
-    <section className='flex flex-col-reverse items-start gap-x-10 gap-y-4 pb-24 md:flex-row md:items-center'>
-      <div className='mt-2 flex-1 md:mt-0'>
+    <section className='flex flex-col-reverse items-center gap-x-10 gap-y-6 pb-24 md:flex-row md:items-center'>
+      <div className='mt-2 flex-1 text-center md:mt-0 md:text-left'>
         <h1 className='title no-underline'>Hey, I&#39;m Ziad.</h1>
         <p className='mt-3 font-light text-muted-foreground'>
           I&#39;m an artificial intelligence graduate based in Jeddah, Saudi Arabia. I&#39;m
@@ -14,11 +14,11 @@ export default function Intro() {
       </div>
       <div className='relative'>
         <Image
-          className='flex-1 rounded-lg grayscale'
+          className='flex-1 rounded-lg grayscale '
           src={authorImage}
           alt='Ziad Tamim'
-          width={175}
-          height={175}
+          width={200}
+          height={200}
           priority
         />
       </div>

@@ -3,15 +3,20 @@ import Image from 'next/image'
 
 import { formatDate } from '@/lib/utils'
 import MDXContent from '@/components/mdx-content'
-
+import { getPosts, getPostBySlug } from '@/lib/posts'
 import { ArrowLeftIcon } from '@radix-ui/react-icons'
 import { notFound } from 'next/navigation'
-import { getPostBySlug } from '@/lib/posts'
+import { Badge } from '@/components/ui/badge'
 
+export async function generateStaticParams() {
+  const posts = await getPosts()
+  const slugs = posts.map(post => ({ slug: post.slug }))
 
+  return slugs
+}
 
 export default async function Post({ params }: { params: { slug: string } }) {
-  const { slug } = params
+  const { slug } = await params
   const post = await getPostBySlug(slug)
 
   if (!post) {
@@ -19,7 +24,7 @@ export default async function Post({ params }: { params: { slug: string } }) {
   }
 
   const { metadata, content } = post
-  const { title, image, author, publishedAt } = metadata
+  const { title, image, author, publishedAt, tags } = metadata
 
   return (
     <section className='pb-24 pt-32'>
@@ -48,12 +53,26 @@ export default async function Post({ params }: { params: { slug: string } }) {
           <p className='mt-3 text-xs text-muted-foreground'>
             {author} / {formatDate(publishedAt ?? '')}
           </p>
+          
+          {/* Display tags */}
+          {tags && tags.length > 0 && (
+            <div className='flex flex-wrap gap-2 mt-4'>
+              {tags.map((tag, index) => (
+                <Badge key={index} variant="outline">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          )}
         </header>
 
-        <main className='prose mt-16 dark:prose-invert'>
+        <main className='mt-16'>
           <MDXContent source={content} />
         </main>
 
+        <footer className='mt-16'>
+
+        </footer>
       </div>
     </section>
   )

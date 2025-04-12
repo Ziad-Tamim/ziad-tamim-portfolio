@@ -41,6 +41,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
 }
 
 :root {
@@ -76,6 +77,17 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --sh-identifier: #354150;
+  --sh-keyword: #f47067;
+  --sh-string: #00a99a;
+  --sh-class: #8d85ff;
+  --sh-property: #4e8fdf;
+  --sh-entity: #6eafad;
+  --sh-jsxliterals: #bf7db6;
+  --sh-sign: #8996a3;
+  --sh-comment: #a19595;
+
 }
 
 .dark {
@@ -110,6 +122,12 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  --sh-class: #4c97f8;
+  --sh-identifier: white;
+  --sh-keyword: #f47067;
+  --sh-string: #0fa295;
+  
 }
 
 @layer base {
@@ -147,3 +165,16 @@
     @apply mx-auto px-4 sm:px-6 lg:px-8;
   }
 }
+
+/* Syntax highlighting styles */
+.mdx-content code {
+  color: var(--sh-identifier);
+}
+
+.mdx-content code .keyword {
+  color: var(--sh-keyword);
+}
+
+/* End of syntax highlighting styles */
+
+
