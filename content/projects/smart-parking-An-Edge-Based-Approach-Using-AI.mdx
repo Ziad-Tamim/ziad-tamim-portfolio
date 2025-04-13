@@ -1,0 +1,118 @@
+---
+  title: Smart Parking - An Edge-Based Approach Using Computer Vision and Deep Learning
+  summary: Exploring smarter, efficient parking management solutions using lightweight deep learning models optimized for edge devices.
+  image: /images/projects/smart-parking/olympic-park-prediction.png
+  author: 'Ziad Tamim'
+  publishedAt: '2025-04-13'
+  tags: ['AI', 'Deep Learning', 'Edge Computing', 'Smart Cities', 'Parking Management']
+---
+Urban areas globally face significant congestion, often worsened by inefficient parking management. Traditional sensor-based systems, while effective, are costly and impractical for 
+large-scale implementation due to the need for sensors in every parking slot. My project aimed to address these inefficiencies using modern, cost-effective AI solutions.
+
+## What was the problem?
+
+Typical parking management solutions rely heavily on centralized systems requiring significant bandwidth to transmit data from numerous cameras to central servers. 
+This approach is expensive, introduces security vulnerabilities, and is challenging to scale effectively.
+
+## My Solution
+
+### Edge Computing
+
+I developed an edge-based smart parking system capable of real-time occupancy detection directly on-device. This drastically reduces bandwidth requirements, lowers costs, and enhances data security.
+
+### Custom Lightweight Model
+
+To ensure efficient operation on resource-limited edge devices, I crafted a custom neural network based on MobileNet's depthwise separable convolution blocks:
+
+- Depthwise Convolution: Processes each input channel separately, reducing computational load.
+
+- Pointwise Convolution: Merges channel outputs efficiently with a 1x1 convolution.
+
+- Optimized Architecture: My custom model has only 16 layers compared to MobileNetV1's 28, tailored specifically for binary classification (occupied vs. empty parking slots).
+
+### Model Compression Techniques
+
+To further enhance performance and reduce resource demands, I employed:
+
+![Knowledge Distillation](/images/projects/smart-parking/knowledge-distillation.jpg)
+
+- Knowledge Distillation: A "teacher-student" approach where a smaller custom model (student) learns from a larger, powerful ResNet50 model (teacher). This maintains accuracy while significantly speeding up inference.
+
+![Quantization](/images/projects/smart-parking/Quantisation.png)
+
+- Quantization: Applied post-training quantization to reduce model precision from 32-bit floats to 8-bit integers, significantly decreasing the model size by 92% (from 325 KB to just 26 KB).
+
+### How the Smart Parking System Works
+
+![System Design](/images/projects/smart-parking/system-design.png)
+Here’s how my edge-based parking occupancy system processes and classifies parking slots in real-time:
+
+#### a) Live Video Frame Capture
+- The system starts by capturing video frames using a camera attached to a Raspberry Pi 5.
+- These frames show the full view of the parking lot.
+
+#### b) Annotated Parking Slots (LabelMe)
+- Before processing, each parking slot is manually annotated using LabelMe software.
+- This provides polygon coordinates for every slot so the system knows exactly where to look in each frame.
+
+#### c) Cropping the Parking Slot
+- Using the annotated coordinates, the system crops each slot from the full video frame using a custom function.
+- This isolates the area of interest — the individual parking slot.
+
+#### d) Perspective Transformation
+- A perspective correction is applied to the cropped slot to make sure it appears as a standardized square, even if the camera angle is tilted.
+- This ensures accurate classification regardless of viewing angle or distortion.
+
+#### e) Occupancy Classification (QCustom Model)
+- The cropped and transformed image is then fed into the QCustom model running directly on the Raspberry Pi.
+
+- The model classifies the slot as either:
+    - 1 → Occupied
+    - 0 → Empty
+
+- The classification history is stored in a buffer (deque) to smooth out predictions and avoid flickering results.
+
+#### f) Sending to Central System & Displaying on UI
+- The final status of each slot is:
+  - Visualized locally on the Pi (only for testing performance)
+  - Sent to the centralised server in a compact JSON format
+- A Flask web server then displays the parking availability in real-time through a web app dashboard, helping users easily find available spaces.
+
+
+## Datasets and Evaluation
+
+I tested my solution extensively across multiple datasets:
+
+- CNRPark-EXT Dataset: 144,965 images across varying conditions, achieving 98.69% accuracy.
+
+- Prototype Dataset: Controlled environment using toy cars, achieving 100% accuracy.
+
+- Hyderabad Dataset: Real-world dataset focusing on nighttime conditions, achieving 98.21% accuracy.
+
+My compressed model ("QCustom") notably outperformed traditional heavyweight models in terms of speed (0.77ms inference time) and efficiency (only 26KB file size).
+
+
+## Results
+The edge-based occupancy detection system successfully:
+
+- Reduced inference time by over 99% compared to MobileNetV1 (0.74ms vs. 156.5ms).
+
+- Achieved real-time performance at 30fps on Raspberry Pi 5.
+
+- Delivered 97.44% accuracy in real-world tests using a video feed.
+
+- Maintained accuracy across all datasets, even under challenging lighting conditions.
+
+- Matched or outperformed state-of-the-art methods, without requiring GPUs.
+
+
+## Final Thoughts
+
+This project not only solved practical challenges in parking management but also highlighted my expertise in edge computing, deep learning, 
+model optimization, and deployment of lightweight AI models. The methods and tools I mastered—including TensorFlow Lite, MobileNet architectures, 
+knowledge distillation, and quantization techniques—demonstrate practical skills valuable for smart city initiatives and AI-driven IoT solutions.
+
+
+## Links
+- Read full paper -> [Reaserch paper](https://drepo.sdl.edu.sa/items/c7d34959-7b99-41da-ac5c-bdc2c2f7b1ff)
+- [GitHub Repo](https://github.com/Ziad-Tamim/Enhancing-Computational-Efficiency-for-Parking-Occupancy-Detection-on-Edge-Devices)
