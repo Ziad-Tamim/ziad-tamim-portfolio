@@ -1,0 +1,178 @@
+---
+title: "Every Data Scientist Should Know This By Heart— Beginners Level Machine Learning Concept"
+summary: "A high-level overview of the fundamental machine learning concepts every data scientist should know before starting their ML journey."
+image: /images/posts/EveryDataScientistShouldKnowThisByHeart/mainpic.webp
+publishedAt: '2025-04-13'
+author: "Ziad Tamim"
+tags: ["Machine Learning", "Data Science", "ML Concepts", "Beginner"]
+---
+
+I have learned these fundamental machine learning concepts from the book *Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 3rd Edition*. This book has been instrumental in helping me understand key data science principles and in executing various machine learning projects.
+
+## Content
+
+- What is Machine Learning?
+- Why Use Machine Learning?
+- Examples of Applications
+- Types of Machine Learning Systems
+- Main Challenges of Machine Learning
+
+## What Is Machine Learning?
+
+A basic definition of machine learning is the science of programming computers to learn from data.
+
+**General Definition:**
+
+> Machine Learning is the field of study that gives computers the ability to learn without being explicitly programmed.  
+> — Arthur Samuel, 1959 [1]
+
+Your spam filter is a machine learning program that, given examples of spam emails (flagged by users) and examples of regular emails (non-spam, also called “ham”), can learn to flag spam. The examples that the system uses to learn are called the training set. Each training example is called a training instance (or sample). The part of a machine learning system that learns and makes predictions is called a model. Neural networks and random forests are examples of models.
+
+## Why Use Machine Learning?
+
+Imagine programming a spam filter to detect spam emails. It’s a hard task to do; the program would require a long list of complex rules that are hard to maintain. Here are some reasons why you might want to use machine learning instead:
+
+- **Simpler Code:** A machine learning model can often simplify code compared to long lists of fine-tuned rules.
+- **Solving Complex Problems:** In cases where traditional programming yields no good solution, machine learning techniques might find a viable approach.
+- **Adapting to Change:** A machine learning system can easily be retrained on new data, keeping it up to date.
+- **Data Insights:** It helps in extracting insights from complex problems and large datasets.
+
+## Examples of Applications
+
+Here are some common machine learning tasks along with their techniques:
+
+- **Image Classification:** Using convolutional neural networks (CNNs) or transformers to classify images (e.g., products on a production line).
+- **Semantic Image Segmentation:** Detecting tumors in brain scans by classifying each pixel using CNNs or transformers.
+- **Text Classification:** Applying NLP tools such as recurrent neural networks (RNNs), CNNs, or transformers to classify news articles and filter offensive comments.
+- **Text Summarization and Chatbots:** Utilizing NLP to summarize documents and develop chatbots, leveraging natural language understanding (NLU) and question-answering.
+- **Regression Models:** Forecasting company revenue or handling voice commands using regression techniques or sequence processing models.
+- **Anomaly Detection:** Identifying credit card fraud using techniques like isolation forests, Gaussian mixture models, or autoencoders.
+- **Clustering and Visualization:** Segmenting clients for targeted marketing using clustering techniques or visually representing datasets via dimensionality reduction.
+- **Recommender Systems:** Predicting a client’s next purchase with neural networks analyzing historical data.
+- **Reinforcement Learning (RL):** Developing intelligent game bots (such as AlphaGo) that learn to maximize rewards through trial and error.
+
+## Types of Machine Learning Systems
+
+### 1. Supervision in Training
+
+- **Supervised Learning:**  
+  Systems are trained on labelled datasets, where each input is associated with a desired output. For example, spam filters are often trained on examples of “spam” and “ham.”  
+  
+  ![Figure 1: Example of supervised learning (spam classification)](/images/posts/EveryDataScientistShouldKnowThisByHeart/supervised-learning.png)
+  *Figure 1: Example of supervised learning (spam classification)*  
+  _Note:_ The terms “target” and “label” are often used interchangeably—“target” more for regression tasks and “label” for classification tasks.
+
+- **Unsupervised Learning:**  
+  Involves finding patterns in unlabelled data, such as clustering customers based on purchasing behavior.  
+  ![Figure 2: Clustering example](/images/posts/EveryDataScientistShouldKnowThisByHeart/clustering.webp)
+  *Figure 2: Clustering example*  
+  _Note:_ Features (or predictors) refer to the attributes used by the model.
+
+- **Semi-supervised Learning:**  
+  Combines labelled and unlabelled data; useful when labelling is expensive or time-consuming.
+  ![Figure 3: Semi-supervised learning with two classes](/images/posts/EveryDataScientistShouldKnowThisByHeart/Semi-supervised-Learning.png)
+  *Figure 3: Semi-supervised learning with two classes (triangles and squares)*
+
+- **Self-supervised Learning:**  
+  Generates its own labels from the data by transforming the input and predicting the original version.  
+  ![Figure 4: Self-supervised learning example](/images/posts/EveryDataScientistShouldKnowThisByHeart/Self-supervised-Learning.png)
+  *Figure 4: Self-supervised learning example (input vs. target)*
+
+- **Reinforcement Learning:**  
+  An agent learns to make decisions by performing actions and receiving rewards or penalties. 
+  ![Figure 5: Reinforcement learning in robotics example](/images/posts/EveryDataScientistShouldKnowThisByHeart/Reinforcement-Learning.png)
+  *Figure 5: Reinforcement learning in robotics example*
+
+### 2. Learning Modes
+
+- **Batch Learning:**  
+  The model is trained on the entire dataset at once. This method is suited for stable environments but can suffer from model rot or data drift over time.
+  
+  _Tip:_ Regular retraining is necessary to keep the model effective.
+
+- **Online Learning:**  
+  Continuously updates the model as new data arrives. This is ideal for applications like stock price prediction, where trends can change quickly.
+  
+  _Note:_ The quality of new data is essential for maintaining performance.
+
+### 3. Learning Approaches
+
+- **Instance-based Learning:**  
+  The model memorizes training instances and uses similarity measures to make predictions.  
+  ![Figure 6: Instance-based learning example](/images/posts/EveryDataScientistShouldKnowThisByHeart/Instance-based-learning.png)
+  *Figure 6: Instance-based learning example*
+
+- **Model-based Learning:**  
+  Constructs a predictive model from patterns in the training data, aiming to generalize well to unseen data.  
+ ![Figure 7: Model-based learning example](/images/posts/EveryDataScientistShouldKnowThisByHeart/Model-based-learning.png)
+  *Figure 7: Model-based learning example*
+
+## Main Challenges of Machine Learning
+
+### 1. Insufficient Quantity of Training Data
+
+Humans can learn from just a few examples. In contrast, machine learning models often require thousands or even millions of data points.  
+_Example:_ A study by Banko and Brill (2001) [2] showed that with enough data, even simpler models can achieve high performance on complex tasks.  
+*Figure 8: The importance of data versus algorithms*
+
+### 2. Non-Representative Training Data
+
+Effective models need data that accurately represents real-world scenarios. If not, models may fail to generalize beyond the training set.  
+_Impact:_ A model trained on GDP data from only certain income brackets may not perform well when applied broadly.
+
+### 3. Poor-Quality Data
+
+Noisy data, errors, or outliers can mislead the learning process.  
+_Strategies:_  
+- **Outlier Detection:** Remove or correct outliers.
+- **Handling Missing Features:** Options include dropping instances or imputing values (using mean, median, or mode).
+
+### 4. Irrelevant Features
+
+The quality of a machine learning model depends on selecting relevant features. Poor feature engineering leads to suboptimal performance.  
+_Steps:_  
+- Feature selection, extraction, and creation of new features.
+
+### 5. Overfitting the Training Data
+
+![Figure 9: Overfitting example](/images/posts/EveryDataScientistShouldKnowThisByHeart/Overfitting.png)
+
+Overfitting occurs when a model learns the training data too well, including its noise and outliers, leading to poor performance on new data.  
+_Example:_ A high-degree polynomial model might perfectly fit the training data (see Figure 9) yet fail to generalize.  
+_Prevention:_  
+- Simplify the model.
+- Increase the training data.
+- Apply regularization techniques.
+
+### 6. Underfitting the Training Data
+
+Underfitting happens when the model is too simple to capture the underlying structure of the data, resulting in inaccurate predictions even on the training set.  
+_Solutions:_  
+- Choose a more powerful model.
+- Enhance feature engineering.
+- Reduce model constraints (e.g., lower regularization).
+
+## Summary
+
+Machine learning is about enabling machines to learn from data rather than relying solely on explicit programming. It includes various approaches such as:
+
+- **Supervised Learning:** From labelled data.
+- **Unsupervised Learning:** Discovering patterns in unlabelled data.
+- **Batch Learning:** Training on an entire dataset.
+- **Online Learning:** Incrementally learning from new data.
+- **Instance-based Learning:** Memorizing instances.
+- **Model-based Learning:** Building predictive models.
+
+A successful project hinges on acquiring sufficient, representative, and high-quality data, and selecting a model that avoids both overfitting and underfitting.
+
+Most of the content in this article was adapted from *Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 3rd Edition* by Aurélien Géron (Chapter 1) [3].
+
+_Illustrations were made by me ;)_
+
+## References
+
+1. **Samuel, A.L.** (1959). Some Studies in Machine Learning Using the Game of Checkers. *IBM Journal of Research and Development, 3*(3), 210–229. [Link](http://ieeexplore.ieee.org/document/5392560/) [Accessed: 16 June 2024].
+
+2. **Banko, M. and Brill, E.** (2001). Scaling to very very large corpora for natural language disambiguation, pp. 26–33. [Link](https://dl.acm.org/doi/10.3115/1073012.1073017) [Accessed: 17 June 2024].
+
+3. **Géron, A.** (2022). *Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 3rd edn.* [O’REILLY]. (Chapter 1).
