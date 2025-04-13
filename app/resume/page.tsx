@@ -22,11 +22,10 @@ export default function ResumePage() {
         {/* Education Section */}
         <EducationSection />
 
+
         {/* Work Experience Section */}
         <ExperienceSection />
 
-
-      
 
         {/* Skills Section */}
         <SkillsSection />
@@ -34,7 +33,6 @@ export default function ResumePage() {
           
         {/* Projects Section */}
         <ProjectsSection />
-
 
 
         {/* Certifications Section */}
