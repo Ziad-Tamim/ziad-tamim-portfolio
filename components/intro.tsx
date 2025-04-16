@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import authorImage from '@/public/images/author/ziad-t-3.jpg'
+import SocialLinks from './social-links'
 
 export default function Intro() {
   return (
@@ -10,6 +11,11 @@ export default function Intro() {
           I&#39;m an artificial intelligence graduate based in Jeddah, Saudi Arabia. I&#39;m
           passionate about learning new technologies and building AI powered applications.
         </p>
+        
+        {/* Social Links */}
+        <div className="mt-4">
+          <SocialLinks className="justify-center md:justify-start" />
+        </div>
       </div>
       <div className='relative'>
         <Image

@@ -1,6 +1,7 @@
 import { JSX } from 'react'
 import { highlight } from 'sugar-high'
 import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc'
+import Image from 'next/image'
 
 import Counter from '@/components/counter'
 
@@ -51,7 +52,23 @@ const components = {
   blockquote: (props: any) => <blockquote {...props} className="border-l-4 border-primary/30 pl-4 italic my-4" />,
   a: (props: any) => <a {...props} className="text-primary hover:underline font-medium" />,
   hr: (props: any) => <hr {...props} className="my-6 border-t border-muted" />,
-  img: (props: any) => <img {...props} alt={props.alt || ''} className="rounded-md my-4 max-w-full" />,
+  img: (props: any) => {
+    // For Next.js Image component, we need width and height
+    // Since MDX might not provide them, we'll use reasonable defaults
+    return (
+      <div className="relative my-4 overflow-hidden rounded-md">
+        <Image
+          src={props.src}
+          alt={props.alt || ''}
+          width={props.width || 1200}
+          height={props.height || 800}
+          className="rounded-md max-w-full"
+          style={{ objectFit: 'contain' }}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
+      </div>
+    );
+  },
   pre: (props: any) => {
     // Check if the code is Python to add specific class
     const isPython = props.children?.props?.className?.includes('language-python');
