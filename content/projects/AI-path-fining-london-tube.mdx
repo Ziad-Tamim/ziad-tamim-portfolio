@@ -1,0 +1,126 @@
+---
+  title: AI Route Finder Using Agenda-Based Search Algorithms London Underground System
+  summary: I implemented and evaluated Depth-First Search (DFS), Breadth-First Search (BFS), Uniform Cost Search (UCS), and a heuristic-based Best-First Search algorithms, I analyzed their performance in finding optimal routes across the Tube system.
+  image: /images/projects/AI-Path-fining/mainpic.png
+  author: 'Ziad Tamim'
+  publishedAt: '2024-06-24'
+  tags: ['Search Algorithms', 'Smart City', 'Path finding']
+---
+In this project, I developed an intelligent route-finding system for the London Underground (Tube) network using classical agenda-based search algorithms. 
+The goal was to design and compare various search methods to effectively traverse a complex transportation graph, optimizing for both the number of stations 
+and travel time. By implementing and evaluating Depth-First Search (DFS), Breadth-First Search (BFS), Uniform Cost Search (UCS), and a heuristic-based Best-First Search, 
+I analyzed their performance in finding optimal routes across the Tube system. The project also extended UCS by incorporating line change penalties to simulate more realistic 
+commuting experiences. The final system demonstrates how traditional AI algorithms can be adapted for intelligent navigation in metropolitan rail systems.
+
+## Introduction
+Urban transportation networks such as the London Underground are vast and complex, requiring sophisticated algorithms for efficient navigation. 
+Finding an optimal route between two stations involves considering multiple variables including number of stops, total travel time, and line changes. 
+In this project, I built a search-based AI system that addresses this challenge using classical agenda-based search techniques. The project aims to explore 
+the efficiency and trade-offs among various search strategies and to implement enhancements like line-switching penalties and heuristic guidance.
+
+
+## Methodology
+### Data Loading and Preprocessing
+I began by loading a dataset (`tubedata.cs`v) containing station connections, travel costs, and Tube lines. 
+The data was parsed using Pandas into two dictionaries: one representing station-to-station links `(station_dict`) 
+and another capturing zone information (`zone_dict`). Each station link was bidirectional, and costs represented average travel time between stations.
+
+
+[StartingStation], [EndingStation], [TubeLine], [AverageTimeTaken], [MainZone], [SecondaryZone], where:
+```python
+Harrow & Wealdstone, Kenton, Bakerloo, 3, 5, 0
+
+Kenton, South Kenton, Bakerloo, 2, 4, 0
+```
+
+- StartingStation: Starting tube station.
+- EndingStation: Directly connected tube station.
+- TubeLine: Line connecting the stations.
+- AverageTimeTaken: Time (in minutes) to travel between the two stations.
+- MainZone: Zone of the starting station.
+- SecondaryZone: Secondary zone of the starting station (0 if none). Data loaded using Pandas in Python.
+
+### Graph Visualization
+To visualize the London Tube network, I employed `NetworkX` and `Matplotlib` to render a graph where nodes represented 
+stations and weighted edges denoted travel times. This helped validate the graph structure and offered insights into the connectivity of the network.
+
+### Agenda-Based Search Algorithms
+#### 1. Breadth-First Search (BFS):
+
+- Implemented using a queue (deque) to explore nodes level by level.
+
+- Guaranteed the shortest path in terms of the number of stations.
+
+- Returned the path, number of stations, total travel time, and nodes expanded.
+
+#### 2. Depth-First Search (DFS):
+
+- Used a stack to dive deep into one path before backtracking.
+
+- Did not guarantee optimal path in terms of travel time or station count.
+
+- Useful for exhaustive exploration of long paths.
+
+#### 3. Uniform Cost Search (UCS):
+
+- Used a priority queue (heapq) to explore nodes with the lowest cumulative travel time.
+
+- Guaranteed the optimal path in terms of cost.
+
+#### 4. UCS with Line Change Penalty:
+
+- Extended UCS by adding a fixed time penalty for switching Tube lines (e.g., 10 minutes).
+
+- More realistically models actual commuter behavior.
+
+#### 5. Heuristic Best-First Search:
+
+- Employed a heuristic function based on zone differences between current and goal stations.
+
+- Prioritized nodes closer to the goal zone.
+
+- Faster than UCS but not guaranteed to return the optimal path.
+
+## Results
+
+### **BFS**
+- **Path:** Mile End → Bethnal Green → Liverpool Street → Bank/Monument → Waterloo → Westminster → Green Park → Oxford Circus  
+- **Stations:** 7  
+- **Time:** 18 mins  
+- **Nodes Expanded:** 70
+
+### **DFS**
+- **Path:** Mile End → Bow Road → ... → Oxford Circus (long detour)  
+- **Stations:** 19  
+- **Time:** 43 mins  
+- **Nodes Expanded:** 43
+
+### **UCS (Standard)**
+- **Path:** Mile End → Bethnal Green → Liverpool Street → ... → Oxford Circus  
+- **Stations:** 8  
+- **Time:** 16 mins  
+- **Nodes Expanded:** 119
+
+### **UCS (With Line Change Cost)**
+- **Path:** Same as standard UCS  
+- **Stations:** 8  
+- **Time:** 16 mins (optimized with fewer line switches)  
+- **Nodes Expanded:** 34
+
+### **Heuristic Best-First Search**
+- **Path:** Mile End → Bethnal Green → ... → Oxford Circus  
+- **Stations:** 13  
+- **Time:** 30 mins  
+- **Nodes Expanded:** 58
+
+## Conclusion:
+The project demonstrated the application of various search algorithms to the London Underground route-finding problem. 
+While BFS and DFS offered simple approaches to pathfinding, UCS proved to be the most effective in terms of minimizing travel time, 
+particularly when line-change penalties were incorporated. Best-First Search, while faster in some cases, did not consistently outperform UCS 
+in terms of optimality. By implementing and comparing these algorithms, this project showcased how AI-based search methods can be applied to real-world 
+transportation systems to optimize travel efficiency and guide commuters through complex networks.
+
+
+## Links:
+- [GitHub code link](https://github.com/Ziad-Tamim/AI-route-finder-using-an-agenda-based-search-algorithm--London-Underground/tree/main)
+
