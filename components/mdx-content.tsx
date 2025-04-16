@@ -56,7 +56,7 @@ const components = {
     // For Next.js Image component, we need width and height
     // Since MDX might not provide them, we'll use reasonable defaults
     return (
-      <div className="relative my-4 overflow-hidden rounded-md">
+      <span className="block my-4 overflow-hidden rounded-md">
         <Image
           src={props.src}
           alt={props.alt || ''}
@@ -66,7 +66,7 @@ const components = {
           style={{ objectFit: 'contain' }}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-      </div>
+      </span>
     );
   },
   pre: (props: any) => {
