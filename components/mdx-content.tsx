@@ -4,9 +4,36 @@ import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc'
 
 import Counter from '@/components/counter'
 
+// This function processes code to fix line spacing
+function processCodeContent(code: string): string {
+  return code
+    .replace(/\r\n/g, '\n')       // Normalize line endings
+    .replace(/\n\n\n+/g, '\n\n')  // Replace 3+ blank lines with 1 blank line
+}
+
 function Code({ children, ...props }: any) {
-  const codeHTML = highlight(children)
-  return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} className="font-mono text-sm" />
+  // Process the code content
+  let processedCode = typeof children === 'string' 
+    ? processCodeContent(children)
+    : children;
+  
+  const codeHTML = highlight(processedCode);
+  
+  // For Python code specifically, add a class
+  const isPython = props.className?.includes('language-python');
+  const className = `font-mono text-sm ${isPython ? 'python-code' : ''}`;
+  
+  return (
+    <code 
+      dangerouslySetInnerHTML={{ __html: codeHTML }}
+      {...props}
+      className={className}
+      style={{ 
+        lineHeight: 1.5,  // Increased line height for better readability
+        whiteSpace: 'pre',
+      }}
+    />
+  );
 }
 
 const components = {
@@ -25,12 +52,22 @@ const components = {
   a: (props: any) => <a {...props} className="text-primary hover:underline font-medium" />,
   hr: (props: any) => <hr {...props} className="my-6 border-t border-muted" />,
   img: (props: any) => <img {...props} className="rounded-md my-4 max-w-full" />,
-  pre: (props: any) => (
-    <pre 
-      {...props} 
-      className="overflow-auto p-4 bg-gray-100 dark:bg-zinc-900 rounded-md my-4 border border-gray-200 dark:border-zinc-800"
-    />
-  ),
+  pre: (props: any) => {
+    // Check if the code is Python to add specific class
+    const isPython = props.children?.props?.className?.includes('language-python');
+    const className = `overflow-auto p-4 bg-gray-100 dark:bg-zinc-900 rounded-md my-4 border border-gray-200 dark:border-zinc-800 code-block ${isPython ? 'python-code-block' : ''}`;
+    
+    return (
+      <pre 
+        {...props}
+        className={className}
+        style={{ 
+          lineHeight: 1.5,
+          whiteSpace: 'pre',
+        }}
+      />
+    );
+  },
   table: (props: any) => <table {...props} className="min-w-full divide-y divide-border my-4" />,
   th: (props: any) => <th {...props} className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider" />,
   td: (props: any) => <td {...props} className="px-4 py-3 text-sm" />
@@ -40,10 +77,25 @@ export default function MDXContent({
   source,
   ...props
 }: JSX.IntrinsicAttributes & MDXRemoteProps) {
+  // Process the source to fix code blocks before rendering
+  let processedSource = source;
+  
+  // Try to fix code blocks directly in the markdown source
+  if (typeof source === 'string') {
+    // Replace python code blocks to ensure they don't have extra newlines while maintaining normal spacing
+    processedSource = source.replace(
+      /```python([\s\S]*?)```/g, 
+      (match, codeContent) => {
+        const cleanedCode = processCodeContent(codeContent);
+        return "```python" + cleanedCode + "```";
+      }
+    );
+  }
+  
   return (
     <div className="mdx-content">
       <MDXRemote
-        source={source}
+        source={processedSource}
         {...props}
         components={{ ...components, ...(props.components || {}) }}
         options={{

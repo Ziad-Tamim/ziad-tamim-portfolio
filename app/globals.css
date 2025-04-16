@@ -177,4 +177,69 @@
 
 /* End of syntax highlighting styles */
 
+/* MDX Code Block Styles */
+.mdx-content pre,
+.mdx-content code {
+  line-height: 1 !important;
+  white-space: pre !important;
+}
+
+.mdx-content pre > code {
+  display: block;
+}
+
+.mdx-content pre {
+  padding: 1rem;
+  overflow: auto;
+}
+
+/* Override line spacing in code blocks */
+.mdx-content pre * {
+  line-height: 1.5 !important; 
+}
+
+.mdx-content code * {
+  line-height: 1.5 !important;
+}
+
+/* Force clean line heights for syntax highlighting spans */
+.mdx-content code .keyword,
+.mdx-content code .string,
+.mdx-content code .function,
+.mdx-content code .operator,
+.mdx-content code .punctuation,
+.mdx-content code .class,
+.mdx-content code .comment,
+.mdx-content code .number,
+.mdx-content code .property {
+  display: inline !important;
+  line-height: 1.5 !important;
+  white-space: pre !important;
+}
+
+/* Fix Python code blocks specifically */
+.mdx-content .python-code-block * {
+  line-height: 1.5 !important;
+}
+
+/* Force line heights on all spans in code blocks */
+.mdx-content pre span,
+.mdx-content code span {
+  line-height: 1.5 !important;
+  white-space: pre !important;
+  display: inline !important;
+}
+
+/* Remove any back-ticks that might appear at the end */
+.mdx-content pre::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Fix BR tags */
+.mdx-content pre br,
+.mdx-content code br {
+  display: none !important;
+}
+
 
