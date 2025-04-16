@@ -13,7 +13,7 @@ function processCodeContent(code: string): string {
 
 function Code({ children, ...props }: any) {
   // Process the code content
-  let processedCode = typeof children === 'string' 
+  const processedCode = typeof children === 'string' 
     ? processCodeContent(children)
     : children;
   
@@ -51,7 +51,7 @@ const components = {
   blockquote: (props: any) => <blockquote {...props} className="border-l-4 border-primary/30 pl-4 italic my-4" />,
   a: (props: any) => <a {...props} className="text-primary hover:underline font-medium" />,
   hr: (props: any) => <hr {...props} className="my-6 border-t border-muted" />,
-  img: (props: any) => <img {...props} className="rounded-md my-4 max-w-full" />,
+  img: (props: any) => <img {...props} alt={props.alt || ''} className="rounded-md my-4 max-w-full" />,
   pre: (props: any) => {
     // Check if the code is Python to add specific class
     const isPython = props.children?.props?.className?.includes('language-python');

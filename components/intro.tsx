@@ -8,8 +8,7 @@ export default function Intro() {
         <h1 className='title no-underline'>Hey, I&#39;m Ziad.</h1>
         <p className='mt-3 font-light text-muted-foreground'>
           I&#39;m an artificial intelligence graduate based in Jeddah, Saudi Arabia. I&#39;m
-          passionate about learning new technologies and sharing knowledge with
-          others.
+          passionate about learning new technologies and building AI powered applications.
         </p>
       </div>
       <div className='relative'>
@@ -22,6 +21,7 @@ export default function Intro() {
           priority
         />
       </div>
+      
     </section>
   )
 }

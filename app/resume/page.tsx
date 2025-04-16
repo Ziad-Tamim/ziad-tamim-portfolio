@@ -15,9 +15,6 @@ export default function ResumePage() {
     <section className="pt-30 pb-16">
       <div className="container max-w-3xl">
         <h1 className="title mb-8">Resume</h1>
-        <p className="text-muted-foreground mb-10">
-        MSc Artificial Intelligence graduate (First-Class Honors) with a strong focus on computer vision, machine learning, and deep learning. Proficient in Python, TensorFlow, and Keras, with hands-on experience in AI model development, optimization, and computer vision. Passionate about deploying efficient AI solutions for real-world applications.
-        </p>
 
         {/* Education Section */}
         <EducationSection />
