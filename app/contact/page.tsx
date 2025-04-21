@@ -1,24 +1,39 @@
-import Link from 'next/link'
-import { Mail } from 'lucide-react'
+'use client'
+
+import { Mail, Copy } from 'lucide-react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 
 export default function Contact() {
+  const email = 'ziad_tamim@outlook.com'
+  
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(email)
+    toast.success('Email copied to clipboard')
+  }
+
   return (
-    <section className='pb-24 pt-40'>
+    <section className='pb-16 pt-30'>
       <div className='container max-w-3xl'>
-        <h2 className='title mb-8'>Let&apos;s talk about your project</h2>
+        <h1 className='title mb-8'>Get in Touch</h1>
         
         <div className='rounded-lg bg-muted p-8 text-center'>
           <Mail className='mx-auto mb-4 h-12 w-12 text-muted-foreground' />
-          <h3 className='mb-2 text-xl font-medium'>Contact via Email</h3>
+          <h2 className='mb-2 text-xl font-medium'>Contact via Email</h2>
           <p className='mb-6 text-muted-foreground'>
             For inquiries, please reach out to me directly at:
           </p>
-          <Link 
-            href='mailto:ziad_tamim@outlook.com'
-            className='inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90'
-          >
-            ziad_tamim@outlook.com
-          </Link>
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={copyToClipboard}
+              className="flex items-center gap-2"
+            >
+              <Copy className="h-4 w-4" />
+              {email}
+            </Button>
+          </div>
         </div>
       </div>
     </section>

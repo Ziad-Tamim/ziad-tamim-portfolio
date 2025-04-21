@@ -8,8 +8,8 @@ export default function Intro() {
       <div className='mt-2 flex-1 text-center md:mt-0 md:text-left'>
         <h1 className='title no-underline'>Hey, I&#39;m Ziad.</h1>
         <p className='mt-3 font-light text-muted-foreground'>
-          I&#39;m an artificial intelligence graduate based in Jeddah, Saudi Arabia. I&#39;m
-          passionate about learning new technologies and building AI powered applications.
+          I&#39;m an artificial intelligence graduate based in <strong>Jeddah, Saudi Arabia</strong>. I&#39;m
+          passionate about learning new technologies and building <strong>AI powered applications</strong>.
         </p>
         
         {/* Social Links */}

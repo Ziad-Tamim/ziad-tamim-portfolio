@@ -7,6 +7,7 @@ import { getPosts, getPostBySlug } from '@/lib/posts'
 import { ArrowLeftIcon } from '@radix-ui/react-icons'
 import { notFound } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
+import NewsletterForm from '@/components/newsletter-form'
 
 export async function generateStaticParams() {
   const posts = await getPosts()
@@ -77,7 +78,7 @@ export default async function Post({
         </main>
 
         <footer className='mt-16'>
-
+          <NewsletterForm />
         </footer>
       </div>
     </section>

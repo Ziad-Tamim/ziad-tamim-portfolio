@@ -7,7 +7,7 @@ import { ArrowLeftIcon } from '@radix-ui/react-icons'
 import { getProjectBySlug, getProjects } from '@/lib/projects'
 import { notFound } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
-
+import NewsletterForm from '@/components/newsletter-form'
 export async function generateStaticParams() {
   const projects = await getProjects()
   const slugs = projects.map(project => ({ slug: project.slug }))
@@ -75,6 +75,12 @@ export default async function Project({
         <main className='mt-16'>
           <MDXContent source={content} />
         </main>
+
+        <footer className='mt-16'>
+          <NewsletterForm />
+        </footer>
+
+
       </div>
     </section>
   )

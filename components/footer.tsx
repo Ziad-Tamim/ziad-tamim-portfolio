@@ -1,5 +1,5 @@
 import SocialLinks from './social-links'
-
+import Link from 'next/link'
 export default function Footer() {
   return (
     <footer className='py-8'>
@@ -11,8 +11,10 @@ export default function Footer() {
           <div className='mt-8 md:order-1 md:mt-0'>
             <p className='text-center text-xs leading-5 text-muted-foreground'>
               &copy; {new Date().getFullYear()} Ziad Tamim media. All rights
-              reserved.
+              reserved. <Link href='/privacy'>Privacy Policy</Link>
             </p>
+            
+          
           </div>
         </div>
       </div>

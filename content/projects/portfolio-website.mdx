@@ -1,0 +1,65 @@
+---
+    title: "Personal Portfolio Website"
+    summary: 'Modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS.'
+    publishedAt: '2025-04-21'
+    author: 'Ziad Tamim'
+    image: /images/projects/portfolio-website/mainpic.png
+    tags: ['Next.js', 'Web Dev', 'CSS', 'MDX', 'Vercel', 'Resend']
+---
+
+## Overview
+I built this portfolio to present my AI and web‑development work in a clean, organized way—combining a project gallery, 
+resume, and blog into one cohesive site. My aim was to balance simplicity with functionality: visitors can quickly find what 
+they need, whether that’s a deep‑dive article or an overview of my most recent projects.
+
+## Design Principles
+- Content‑First: Prioritize readability and clear hierarchy over decorative elements.
+- Accessibility: Support keyboard navigation, proper contrast ratios, and semantic HTML for screen readers.
+- Responsiveness: Ensure layouts adapt smoothly from mobile screens to wide desktop displays.
+- User Choice: Provide both light and dark themes to suit different viewing preferences.
+
+## Tech Stack
+- Next.js 14 & TypeScript
+- Tailwind CSS for utility‑first styling
+- MDX (via next‑mdx‑remote) for blog and project content
+- Resend for newsletter sign‑ups
+- Vercel & GitHub for CI/CD and hosting
+- Additional Libraries:
+    - shadcn/ui (accessible components)
+    - react‑hook‑form + zod (form handling & validation)
+    - Lucide Icons
+
+## Core Features
+1. Blog System
+ - Write posts in MDX with embedded React components
+ - Frontmatter‑driven metadata for SEO and organization
+
+2. Project Gallery
+- Consistent MDX template featuring overview, tools, challenges, and solutions
+
+3. Resume Page
+- Structured, printable layout for work experience, education, and skills
+
+4. Newsletter Integration
+- Form validation, success/error feedback, and secure email delivery via Resend
+
+5. Performance Optimizations
+- Static generation for most pages
+- Dynamic imports and code splitting
+- Next.js Image optimization
+- Caching headers for assets
+
+
+## Deployment & Domain
+- Continuous Deployment: Every push to main triggers a Vercel build and deploy
+- Custom Domain: Configured ziadtamim.com with DNS and SSL via Vercel
+
+## Results
+- Performance: Consistently scores above 95 on Lighthouse
+- Responsiveness: Fluid layouts and scalable typography across all devices
+- Maintainability: Modular MDX structure makes it straightforward to add new posts or projects
+
+## Links
+- [GitHub code link](https://github.com/Ziad-Tamim/ziad-tamim-portfolio)
+
+

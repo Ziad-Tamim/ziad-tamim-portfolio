@@ -15,9 +15,18 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Ziad Tamim',
-  description: 'Lessons I learned while teaching myself to code.'
-  
+  title: 'Ziad Tamim – AI Portfolio & Blog',
+  description: 'Personal portfolio and lessons I learned while teaching myself to code.',
+  keywords: ['Ziad Tamim', 'AI Engineer Portfolio', 'Machine Learning Blog', 'Deep Learning Projects', 'SaaS Developer'],
+  authors: [{ name: 'Ziad Tamim' }],
+  openGraph: {
+    title: 'Ziad Tamim – AI Portfolio & Blog',
+    description: 'AI projects and technical insights by Ziad Tamim.',
+    url: 'https://www.ziadtamim.com/',
+    siteName: 'Ziad Tamim Portfolio',
+    type: 'website',
+    locale: 'en_US',
+  },
 }
 
 export default function RootLayout({
