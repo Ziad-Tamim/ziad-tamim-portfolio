@@ -27,7 +27,7 @@ export default function EducationSection() {
         <span>Sep 2020 - Jul 2023</span>
         </div>
         <h3 className="text-base font-semibold">
-        BSc Robotics Engineering | University of the West of England Bristol
+        BEng(Hons) Robotics Engineering | University of the West of England Bristol
         </h3>
         <p className="mt-1 text-sm text-muted-foreground">
         Obtained a Second Class Upper Division (Merit). Focus: Robotics Systems, Electronics, Sensing & Perception, CAD Design, Human-Robot Interaction, Mapping.
