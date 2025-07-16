@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import authorImage from '@/public/images/author/ziad-t-3.jpg'
+import authorImage from '@/public/images/author/ed.jpg'
 import SocialLinks from './social-links'
 
 export default function Intro() {

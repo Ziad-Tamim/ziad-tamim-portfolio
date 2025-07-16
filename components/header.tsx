@@ -48,7 +48,7 @@ export default function Header() {
             <NavLink href='/projects'>Projects</NavLink>
           </li>
           <li>
-            <NavLink href='/contact'>Contact</NavLink>
+            <NavLink href='/products'>Products</NavLink>
           </li>
           <li>
             <NavLink href='/resume'>Resume</NavLink>

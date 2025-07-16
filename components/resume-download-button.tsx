@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 export default function ResumeDownloadButton() {
   const handleDownload = (e: React.MouseEvent<HTMLAnchorElement>) => {
     // Check if the file exists first (this is basic check, server-side would be more robust)
-    const pdfPath = '/PDFs/Ziad_Tamim_Resume.pdf'
+    const pdfPath = '/PDFs/Ziad_Tamim_CV.pdf'
     
     // Track the download event
     toast.success('Resume download started')
@@ -17,8 +17,8 @@ export default function ResumeDownloadButton() {
   return (
     <div className="flex items-center justify-center">
       <a 
-        href="/PDFs/Ziad_Tamim_Resume.pdf" 
-        download="Ziad_Tamim_Resume.pdf"
+        href="/PDFs/Ziad_Tamim_CV.pdf" 
+        download="Ziad_Tamim_CV.pdf"
         onClick={handleDownload}
         className="no-underline"
         target="_blank"

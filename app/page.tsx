@@ -1,5 +1,6 @@
 import Intro from '@/components/intro'
 import RecentProjects from '@/components/recent-projects'
+import RecentProducts from '@/components/recent-products'
 import RecentPosts from '@/components/recent-posts'
 import NewsletterForm from '@/components/newsletter-form'
 
@@ -10,9 +11,11 @@ export default function Home() {
       <div className='container max-w-3xl'>
         <Intro />
 
-        <RecentPosts />
-
         <RecentProjects />
+
+        <RecentProducts />
+
+        <RecentPosts />
 
         <NewsletterForm />
 
