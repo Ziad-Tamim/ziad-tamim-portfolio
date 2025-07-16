@@ -11,7 +11,7 @@ export default function Footer() {
           <div className='mt-8 md:order-1 md:mt-0'>
             <p className='text-center text-xs leading-5 text-muted-foreground'>
               &copy; {new Date().getFullYear()} Ziad Tamim media. All rights
-              reserved. <Link href='/privacy'>Privacy Policy</Link> | Updated on January 16, 2025
+              reserved. <Link href='/privacy'>Privacy Policy</Link> | Updated on July 16, 2025
             </p>
           </div>
         </div>
