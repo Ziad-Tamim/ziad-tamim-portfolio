@@ -1,15 +1,19 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { ProjectMetadata } from '@/lib/projects'
 import { formatDate } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
+import { usePostHog } from '@/hooks/use-posthog'
 
 export default function Projects({
   projects
 }: {
   projects: ProjectMetadata[]
 }) {
+  const { trackEvent } = usePostHog()
   return (
     <ul className='grid grid-cols-1 gap-8 sm:grid-cols-2'>
       {projects.map(project => (
@@ -17,7 +21,14 @@ export default function Projects({
           key={project.slug} 
           className='group overflow-hidden rounded-xl bg-card shadow-sm transition-all hover:shadow-md'
         >
-          <Link href={`/projects/${project.slug}`} className="flex h-full flex-col">
+          <Link 
+            href={`/projects/${project.slug}`} 
+            className="flex h-full flex-col"
+            onClick={() => trackEvent('project_clicked', {
+              project_title: project.title,
+              project_slug: project.slug
+            })}
+          >
             {/* Image on top with padding and rounded edges */}
             {project.image && (
               <div>

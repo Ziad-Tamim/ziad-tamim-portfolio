@@ -11,10 +11,13 @@ import { Input } from '@/components/ui/input'
 
 import { subscribe } from '@/lib/actions'
 import { Card, CardContent } from '@/components/ui/card'
+import { usePostHog } from '@/hooks/use-posthog'
 
 type Inputs = z.infer<typeof NewsletterFormSchema>
 
 export default function NewsletterForm() {
+  const { trackEvent } = usePostHog()
+  
   const {
     register,
     handleSubmit,
@@ -32,10 +35,17 @@ export default function NewsletterForm() {
 
     if (result?.error) {
       toast.error('An error occurred! Please try again.')
+      trackEvent('newsletter_subscription_failed', {
+        email: data.email,
+        error: result.error
+      })
       return
     }
 
     toast.success('Subscribed successfully!')
+    trackEvent('newsletter_subscription_success', {
+      email: data.email
+    })
     reset()
   }
 
