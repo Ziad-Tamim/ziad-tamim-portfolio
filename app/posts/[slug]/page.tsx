@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import NewsletterForm from '@/components/newsletter-form'
 import StructuredData from '@/components/structured-data'
+import PageViews from '@/components/page-views'
 
 export async function generateStaticParams() {
   const posts = await getPosts()
@@ -122,9 +123,12 @@ export default async function Post({
 
         <header>
           <h1 className='title'>{title}</h1>
-          <p className='mt-3 text-xs text-muted-foreground'>
-            {author} / {formatDate(publishedAt ?? '')}
-          </p>
+          <div className='mt-3 flex items-center justify-between'>
+            <p className='text-xs text-muted-foreground'>
+              {author} / {formatDate(publishedAt ?? '')}
+            </p>
+            <PageViews slug={slug} type="post" />
+          </div>
           
           {/* Display tags */}
           {tags && tags.length > 0 && (

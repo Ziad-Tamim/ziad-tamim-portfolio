@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { PostMetadata } from '@/lib/posts'
 import { formatDate } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
+import PageViewsServer from '@/components/page-views-server'
 
 export default function Posts({ posts }: { posts: PostMetadata[] }) {
   return (
@@ -31,11 +32,14 @@ export default function Posts({ posts }: { posts: PostMetadata[] }) {
                 </div>
               )}
               
-              {post.publishedAt && (
-                <p className='text-xs text-muted-foreground/70 whitespace-nowrap ml-auto'>
-                  {formatDate(post.publishedAt)}
-                </p>
-              )}
+              <div className='flex items-center gap-4 ml-auto'>
+                {post.publishedAt && (
+                  <p className='text-xs text-muted-foreground/70 whitespace-nowrap'>
+                    {formatDate(post.publishedAt)}
+                  </p>
+                )}
+                <PageViewsServer slug={post.slug} type="post" />
+              </div>
             </div>
           </Link>
         </li>

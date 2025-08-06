@@ -7,6 +7,7 @@ import { ProjectMetadata } from '@/lib/projects'
 import { formatDate } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { usePostHog } from '@/hooks/use-posthog'
+import PageViewsServer from '@/components/page-views-server'
 
 export default function Projects({
   projects
@@ -66,9 +67,12 @@ export default function Projects({
                     ))}
                   </div>
                 )}
-                <p className='text-xs text-muted-foreground/70'>
-                  {formatDate(project.publishedAt ?? '')}
-                </p>
+                <div className='flex items-center justify-between'>
+                  <p className='text-xs text-muted-foreground/70'>
+                    {formatDate(project.publishedAt ?? '')}
+                  </p>
+                  <PageViewsServer slug={project.slug} type="project" />
+                </div>
               </div>
             </div>
           </Link>
