@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import type { Metadata } from 'next'
 
 import { formatDate } from '@/lib/utils'
 import MDXContent from '@/components/mdx-content'
@@ -8,11 +9,61 @@ import { getProjectBySlug, getProjects } from '@/lib/projects'
 import { notFound } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import NewsletterForm from '@/components/newsletter-form'
+import StructuredData from '@/components/structured-data'
 export async function generateStaticParams() {
   const projects = await getProjects()
   const slugs = projects.map(project => ({ slug: project.slug }))
 
   return slugs
+}
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const project = await getProjectBySlug(slug)
+
+  if (!project) {
+    return {
+      title: 'Project Not Found',
+    }
+  }
+
+  const { title, summary, image, tags } = project.metadata
+  const projectUrl = `https://www.ziadtamim.com/projects/${slug}`
+
+  return {
+    title: `${title} | Ziad Tamim Projects`,
+    description: summary,
+    keywords: tags?.join(', '),
+    authors: [{ name: 'Ziad Tamim' }],
+    openGraph: {
+      title: title,
+      description: summary,
+      url: projectUrl,
+      siteName: 'Ziad Tamim Portfolio',
+      images: image ? [
+        {
+          url: `https://www.ziadtamim.com${image}`,
+          width: 1200,
+          height: 630,
+          alt: title,
+        }
+      ] : [],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: title,
+      description: summary,
+      images: image ? [`https://www.ziadtamim.com${image}`] : [],
+    },
+    alternates: {
+      canonical: projectUrl,
+    },
+  }
 }
 
 type ProjectParams = Promise<{ slug: string }>;
@@ -30,10 +81,23 @@ export default async function Project({
   }
 
   const { metadata, content } = project
-  const { title, image, author, publishedAt, tags } = metadata
+  const { title, image, author, publishedAt, tags, summary } = metadata
+
+  const projectUrl = `https://www.ziadtamim.com/projects/${slug}`
 
   return (
-    <section className='pb-24 pt-32'>
+    <>
+      <StructuredData 
+        type="article" 
+        data={{
+          title,
+          summary,
+          image,
+          publishedAt,
+          url: projectUrl
+        }} 
+      />
+      <section className='pb-24 pt-32'>
       <div className='container max-w-3xl'>
         <Link
           href='/projects'
@@ -83,5 +147,6 @@ export default async function Project({
 
       </div>
     </section>
+    </>
   )
 }

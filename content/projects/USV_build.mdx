@@ -1,0 +1,174 @@
+---
+title: Unmanned Surface Vehicle (USV) Design and Build
+summary: A comprehensive project focused on designing and building an unmanned surface vehicle (USV) for autonomous marine applications, including navigation and data collection.
+image: /images/projects/USV/main_pic.png
+author: Ziad Tamim
+publishedAt: 2023-02-15
+tags: [Robotics, Electronics, Autonomous Systems, Embedded Systems]
+---
+This project involved the design, development, and testing of a low-cost Unmanned Surface Vehicle (USV) tailored for search and rescue (SAR) operations in shallow waters. The aim was to create a portable, affordable, and reliable solution that first responders could rapidly deploy in emergencies such as drowning incidents, floods, or river rescues.
+
+Unlike traditional manned rescue vehicles, this USV minimized risks to human rescuers by offering autonomous navigation, real-time underwater video feed, and long operational endurance, all while staying within a modest budget.
+
+## Objectives
+- Design & Build: Construct a USV with autonomous waypoint navigation for systematic search missions.
+- Affordability: Keep the total build cost below £500, making it accessible to small rescue teams and communities.
+- Performance: Ensure the USV could operate autonomously for at least 1 hour, cover 200 meters, and maintain a top speed above 7 km/h.
+- Underwater Detection: Integrate a live camera system to detect victims or hazards in real-time.
+- Portability: Build a system that could be carried, deployed, and controlled by a single operator.
+
+---
+## Background & Motivation
+Search and rescue missions are often hindered by difficult terrain, high operational costs, and risk to human rescuers.
+
+- Commercial USVs cost between £8,000 – £50,000, making them unattainable for smaller organizations.
+- Many lack affordable yet effective underwater detection systems, relying instead on costly sonar solutions.
+
+This project sought to bridge the gap by delivering a functional prototype that is:
+
+- Lightweight and cost-effective,
+- Capable of autonomous missions,
+- Equipped with underwater vision technology,
+- Adaptable for future enhancements like sonar or thermal imaging.
+
+---
+## Design and Development
+![Technical drawing showing the side and top views of an unmanned surface vehicle with labeled dimensions and components, set against a plain background, conveying a precise and informative tone](/images/projects/USV/Drawing.jpg)
+
+### 1. Mechanical Design
+Hull Structure:
+- Adopted a twin-hull catamaran design for stability and efficiency.
+- Built from laser-cut foam boards, coated with two layers of epoxy for rigidity and waterproofing.
+- Each hull housed compartments for LiPo batteries and ESCs, distributing weight evenly.
+
+Dimensions:
+- Length: 90 cm
+- Width: 75 cm (contractible to 55 cm)
+- Height: 35 cm
+- Weight: ~6.2 kg
+
+Portability: The modular design allowed the USV to be assembled/disassembled on-site, enhancing deployability.
+
+![Partially constructed unmanned surface vehicle hull placed on a workbench in a workshop environment, surrounded by tools and materials, evoking a sense of progress and hands-on engineering](/images/projects/USV/hullbuild.jpg)
+
+### 2. Control & Navigation Systems
+Controller: Pixhawk 2.4.8 (running ArduRover firmware)
+
+Ground Control Station (GCS):
+- Mission Planner Software on a laptop
+- FlySky FS-i6X transmitter for manual and autopilot modes
+- Telemetry module for real-time communication
+
+Navigation:
+- GPS Module (M8N with Compass) providing accurate positioning
+- Waypoint Missions: Pre-programmed routes (Parallel & Expanding Square) for autonomous SAR coverage
+
+Failsafe Features: Return-to-Launch (RTL) in case of signal loss
+
+### 3. Underwater Camera System
+![Underwater camera system mounted on the unmanned surface vehicle, showcasing its 3D-printed waterproof dome and gimbal](/images/projects/USV/underWaterCam.jpg)
+
+- FPV Camera with Gimbal housed in a 3D-printed waterproof dome.
+- Real-time Video Transmission to the operator via a 5.8G FPV Monitor (4.3-inch LCD).
+- Control: Remote adjustment of tilt and pan for flexible victim/hazard detection.
+- Testing: Verified waterproofing, smooth gimbal movement, and stable live feed.
+
+
+### 4. Power & Propulsion
+#### Power System
+- **Batteries:** Dual 3S 7100mAh LiPo batteries connected in parallel
+- **Total Capacity:** 14,200mAh
+- **Endurance:** ~140 minutes operation time
+![Battery system of the unmanned surface vehicle, highlighting the dual LiPo battery setup and wiring](/images/projects/USV/Battery.jpg)
+#### Propulsion
+- **Thrusters:** Hobbyocean Underwater Thrusters (860KV)
+- **Steering:** Skid steering (precise control by varying left/right thrust)
+- **ESCs:** Two 40A Brushless Bidirectional ESCs housed in sealed compartments
+- **Top Speed:** 7.24 km/h
+![Motor system of the unmanned surface vehicle, showcasing the thrusters](/images/projects/USV/motors.jpg)
+
+### 5. Software & Firmware
+**Firmware:** Utilized ArduRover (part of the ArduPilot suite) for autonomous navigation and control.
+
+**Mission Planning:** Developed and executed systematic search patterns, including Parallel and Expanding Square routes, to maximize coverage during SAR operations.
+
+**Telemetry & Monitoring:** Real-time data streams included GPS location, speed, battery levels, and live camera feed, all accessible via the Ground Control Station.
+
+**Data Logging:** All telemetry and mission data were recorded for post-operation review and performance analysis.
+
+![Software architecture diagram for the unmanned surface vehicle, illustrating the integration of various components and data flows](/images/projects/USV/software.jpg)
+
+
+## Testing & Results
+
+### Field Trials
+Testing was conducted in the Bristol River due to limited access to pool facilities. For safety, a rope was attached to the USV during initial trials to prevent loss.
+
+### Mechanical Evaluation
+- **Buoyancy:** Supported its own weight (6.2 kg) plus an additional payload of approximately 7.8 kg.
+- **Manoeuvrability:** Demonstrated precise control, including the ability to rotate in place.
+- **Portability:** Easily transported and deployed by a single operator.
+
+### Performance Assessment
+- **Battery Endurance:** Achieved an operational time of approximately 140 minutes.
+- **GPS Connectivity:** Maintained connections with 9–19 satellites, ensuring accurate navigation.
+- **Speed:** Reached a top speed of 7.24 km/h.
+- **Camera System:** Provided stable, real-time underwater video without leaks.
+![](/images/projects/USV/electronics.jpg)
+### Autonomous Mission Trials
+- **Parallel Pattern:** Enabled efficient scanning of large open areas.
+- **Expanding Square Pattern:** Proved effective for locating targets near a specific point.
+
+
+### Project Cost Breakdown
+
+<table className="table-auto border-collapse border border-gray-700 w-full text-sm">
+  <thead>
+    <tr className="bg-gray-800 text-gray-200">
+      <th className="border border-gray-700 px-4 py-2 text-left">Component</th>
+      <th className="border border-gray-700 px-4 py-2 text-center">Quantity</th>
+      <th className="border border-gray-700 px-4 py-2 text-right">Price (£)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td className="border px-4 py-2">Pixhawk 2.4.8</td><td className="border text-center">1</td><td className="border text-right">78</td></tr>
+    <tr><td className="border px-4 py-2">M8N GPS + Compass</td><td className="border text-center">1</td><td className="border text-right">15</td></tr>
+    <tr><td className="border px-4 py-2">3S 7100mAh LiPo Battery</td><td className="border text-center">2</td><td className="border text-right">94</td></tr>
+    <tr><td className="border px-4 py-2">Underwater Thrusters</td><td className="border text-center">2</td><td className="border text-right">84</td></tr>
+    <tr><td className="border px-4 py-2">ESC 40A</td><td className="border text-center">2</td><td className="border text-right">40</td></tr>
+    <tr><td className="border px-4 py-2">FPV Camera + Transmitter</td><td className="border text-center">1</td><td className="border text-right">15</td></tr>
+    <tr><td className="border px-4 py-2">Video Receiver + Screen</td><td className="border text-center">1</td><td className="border text-right">20</td></tr>
+    <tr><td className="border px-4 py-2">Telemetry Module</td><td className="border text-center">1</td><td className="border text-right">15</td></tr>
+    <tr><td className="border px-4 py-2">Servo MG90S</td><td className="border text-center">2</td><td className="border text-right">6</td></tr>
+    <tr><td className="border px-4 py-2">Power Module</td><td className="border text-center">1</td><td className="border text-right">4</td></tr>
+    <tr><td className="border px-4 py-2">Power Distribution Board</td><td className="border text-center">1</td><td className="border text-right">5</td></tr>
+    <tr><td className="border px-4 py-2">Buzzer</td><td className="border text-center">1</td><td className="border text-right">3</td></tr>
+    <tr><td className="border px-4 py-2">Switch</td><td className="border text-center">1</td><td className="border text-right">2</td></tr>
+    <tr><td className="border px-4 py-2">Foam Boards</td><td className="border text-center">4</td><td className="border text-right">8</td></tr>
+    <tr><td className="border px-4 py-2">Acrylic Pipes (25cm & 20cm)</td><td className="border text-center">4</td><td className="border text-right">6</td></tr>
+    <tr><td className="border px-4 py-2">Small Containers</td><td className="border text-center">2</td><td className="border text-right">6</td></tr>
+    <tr><td className="border px-4 py-2">Large Container</td><td className="border text-center">1</td><td className="border text-right">7</td></tr>
+    <tr><td className="border px-4 py-2">Camera Dome</td><td className="border text-center">1</td><td className="border text-right">17.5</td></tr>
+    <tr className="bg-gray-900 font-bold">
+      <td className="border px-4 py-2">Total</td>
+      <td className="border"></td>
+      <td className="border text-right">425.50</td>
+    </tr>
+  </tbody>
+</table>
+
+## Technologies Used
+- **Hardware:** Pixhawk 2.4.8, Hobbyocean Thrusters, FPV Camera, GPS Module, LiPo Batteries
+- **Software:** Mission Planner, ArduRover Firmware
+- **Design Tools:** SolidWorks, 3D Printing, Laser Cutting
+- **Budgeting Tools:** Excel (for Gantt chart & cost tracking)
+
+## Visuals 
+
+![](/images/projects/USV/batteryCompartment.jpg)
+![](/images/projects/USV/bottomview.jpg)
+![](/images/projects/USV/CameraDome.jpg)
+![](/images/projects/USV/cameraSetup.jpg)
+![](/images/projects/USV/USV.jpg)
+![](/images/projects/USV/inWater.jpg)
+![](/images/projects/USV/inWater2.jpg)

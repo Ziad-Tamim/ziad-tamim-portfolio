@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import type { Metadata } from 'next'
 
 import { formatDate } from '@/lib/utils'
 import MDXContent from '@/components/mdx-content'
@@ -8,12 +9,63 @@ import { ArrowLeftIcon } from '@radix-ui/react-icons'
 import { notFound } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import NewsletterForm from '@/components/newsletter-form'
+import StructuredData from '@/components/structured-data'
 
 export async function generateStaticParams() {
   const posts = await getPosts()
   const slugs = posts.map(post => ({ slug: post.slug }))
 
   return slugs
+}
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const post = await getPostBySlug(slug)
+
+  if (!post) {
+    return {
+      title: 'Post Not Found',
+    }
+  }
+
+  const { title, summary, image, tags, publishedAt } = post.metadata
+  const postUrl = `https://www.ziadtamim.com/posts/${slug}`
+
+  return {
+    title: `${title} | Ziad Tamim Blog`,
+    description: summary,
+    keywords: tags?.join(', '),
+    authors: [{ name: 'Ziad Tamim' }],
+    openGraph: {
+      title: title,
+      description: summary,
+      url: postUrl,
+      siteName: 'Ziad Tamim Portfolio',
+      images: image ? [
+        {
+          url: `https://www.ziadtamim.com${image}`,
+          width: 1200,
+          height: 630,
+          alt: title,
+        }
+      ] : [],
+      type: 'article',
+      publishedTime: publishedAt,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: title,
+      description: summary,
+      images: image ? [`https://www.ziadtamim.com${image}`] : [],
+    },
+    alternates: {
+      canonical: postUrl,
+    },
+  }
 }
 
 type PostParams = Promise<{ slug: string }>;
@@ -31,10 +83,23 @@ export default async function Post({
   }
 
   const { metadata, content } = post
-  const { title, image, author, publishedAt, tags } = metadata
+  const { title, image, author, publishedAt, tags, summary } = metadata
+
+  const postUrl = `https://www.ziadtamim.com/posts/${slug}`
 
   return (
-    <section className='pb-24 pt-32'>
+    <>
+      <StructuredData 
+        type="article" 
+        data={{
+          title,
+          summary,
+          image,
+          publishedAt,
+          url: postUrl
+        }} 
+      />
+      <section className='pb-24 pt-32'>
       <div className='container max-w-3xl'>
         <Link
           href='/posts'
@@ -82,5 +147,6 @@ export default async function Post({
         </footer>
       </div>
     </section>
+    </>
   )
 }

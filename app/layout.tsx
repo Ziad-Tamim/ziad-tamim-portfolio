@@ -7,6 +7,7 @@ import './globals.css'
 import Providers from '@/components/providers'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
+import StructuredData from '@/components/structured-data'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 const playfair = Playfair_Display({
@@ -36,6 +37,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' suppressHydrationWarning>
+      <head>
+        <StructuredData type="website" data={{}} />
+        <StructuredData type="person" data={{}} />
+      </head>
       <body
         className={cn(
           'flex min-h-screen flex-col font-sans antialiased',
