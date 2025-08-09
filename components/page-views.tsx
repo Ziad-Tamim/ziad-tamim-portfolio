@@ -5,6 +5,9 @@ import { posthog } from '@/lib/posthog'
 import { EyeOpenIcon } from '@radix-ui/react-icons'
 import { ViewCounter } from '@/lib/view-counter'
 
+// Prevent duplicate increments caused by double mounts/renders
+const incrementInFlight = new Set<string>()
+
 interface PageViewsProps {
   slug: string
   type: 'project' | 'post'
@@ -21,11 +24,22 @@ export default function PageViews({ slug, type, className = '' }: PageViewsProps
         if (typeof window === 'undefined') return
 
         const sessionKey = `viewed:${type}:${slug}`
+        const inflightKey = `${type}:${slug}`
         let newViews = 0
 
-        if (!sessionStorage.getItem(sessionKey)) {
-          newViews = await ViewCounter.incrementViews(type, slug)
+        if (!sessionStorage.getItem(sessionKey) && !incrementInFlight.has(inflightKey)) {
+          // Optimistically mark as viewed to avoid racing double-increments
           sessionStorage.setItem(sessionKey, '1')
+          incrementInFlight.add(inflightKey)
+          try {
+            newViews = await ViewCounter.incrementViews(type, slug)
+          } catch (err) {
+            // On failure, allow retry later
+            sessionStorage.removeItem(sessionKey)
+            throw err
+          } finally {
+            incrementInFlight.delete(inflightKey)
+          }
         } else {
           newViews = await ViewCounter.getViews(type, slug)
         }

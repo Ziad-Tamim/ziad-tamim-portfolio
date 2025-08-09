@@ -9,7 +9,10 @@ export async function redisGet(key: string): Promise<number> {
       headers: { Authorization: `Bearer ${token}` },
       cache: 'no-store',
     })
-    if (!res.ok) return 0
+    if (!res.ok) {
+      const text = await res.text().catch(() => '')
+      throw new Error(`Upstash GET failed (${res.status}): ${text}`)
+    }
     const data = (await res.json()) as { result?: string | number | null }
     const value = typeof data.result === 'number' ? data.result : parseInt(String(data.result ?? '0'))
     return Number.isFinite(value) ? value : 0
@@ -26,10 +29,13 @@ export async function redisIncr(key: string): Promise<number> {
       headers: { Authorization: `Bearer ${token}` },
       cache: 'no-store',
     })
-    if (!res.ok) return 0
+    if (!res.ok) {
+      const text = await res.text().catch(() => '')
+      throw new Error(`Upstash INCR failed (${res.status}): ${text}`)
+    }
     const data = (await res.json()) as { result?: number }
     return typeof data.result === 'number' ? data.result : 0
-  } catch {
+  } catch (err) {
     return 0
   }
 }

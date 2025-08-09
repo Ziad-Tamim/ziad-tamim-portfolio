@@ -20,12 +20,18 @@ export async function GET(req: NextRequest) {
   }
 
   const key = makeKey(type, slug)
-  const views = await redisGet(key)
-
-  return new Response(JSON.stringify({ views }), {
-    status: 200,
-    headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
-  })
+  try {
+    const views = await redisGet(key)
+    return new Response(JSON.stringify({ views }), {
+      status: 200,
+      headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
+    })
+  } catch (err) {
+    return new Response(JSON.stringify({ error: String(err) }), {
+      status: 500,
+      headers: { 'content-type': 'application/json' },
+    })
+  }
 }
 
 export async function POST(req: Request) {
@@ -41,12 +47,17 @@ export async function POST(req: Request) {
   }
 
   const key = makeKey(type, slug)
-  // atomic increment
-  const views = await redisIncr(key)
-
-  return new Response(JSON.stringify({ views }), {
-    status: 200,
-    headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
-  })
+  try {
+    const views = await redisIncr(key)
+    return new Response(JSON.stringify({ views }), {
+      status: 200,
+      headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
+    })
+  } catch (err) {
+    return new Response(JSON.stringify({ error: String(err) }), {
+      status: 500,
+      headers: { 'content-type': 'application/json' },
+    })
+  }
 }
 
