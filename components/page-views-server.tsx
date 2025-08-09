@@ -14,14 +14,11 @@ export default function PageViewsServer({ slug, type, className = '' }: PageView
   const [views, setViews] = useState<number>(0)
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      // Initialize demo data
-      ViewCounter.initializeDemoData()
-      
-      // Get current view count without incrementing
-      const currentViews = ViewCounter.getViews(type, slug)
+    const load = async () => {
+      const currentViews = await ViewCounter.getViews(type, slug)
       setViews(currentViews)
     }
+    load()
   }, [slug, type])
 
   return (

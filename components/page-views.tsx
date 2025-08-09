@@ -16,33 +16,34 @@ export default function PageViews({ slug, type, className = '' }: PageViewsProps
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    let hasTracked = false
-
     const trackViews = async () => {
       try {
-        if (typeof window !== 'undefined' && !hasTracked) {
-          hasTracked = true
+        if (typeof window === 'undefined') return
 
-          // Initialize demo data on first load
-          ViewCounter.initializeDemoData()
+        const sessionKey = `viewed:${type}:${slug}`
+        let newViews = 0
 
-          // Increment view count (handles session checking internally)
-          const newViews = ViewCounter.incrementViews(type, slug)
-          setViews(newViews)
+        if (!sessionStorage.getItem(sessionKey)) {
+          newViews = await ViewCounter.incrementViews(type, slug)
+          sessionStorage.setItem(sessionKey, '1')
+        } else {
+          newViews = await ViewCounter.getViews(type, slug)
+        }
 
-          // Track with PostHog if available
-          if (posthog) {
-            posthog.capture('page_view_detailed', {
-              page_type: type,
-              page_slug: slug,
-              page_url: window.location.href,
-              view_count: newViews
-            })
-          }
+        setViews(newViews)
+
+        if (posthog) {
+          posthog.capture('page_view_detailed', {
+            page_type: type,
+            page_slug: slug,
+            page_url: window.location.href,
+            view_count: newViews,
+          })
         }
       } catch (error) {
         console.error('Error tracking page views:', error)
-        setViews(ViewCounter.getViews(type, slug))
+        const fallback = await ViewCounter.getViews(type, slug)
+        setViews(fallback)
       } finally {
         setLoading(false)
       }
