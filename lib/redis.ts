@@ -1,9 +1,24 @@
-const url = process.env.UPSTASH_REDIS_REST_URL
-const token = process.env.UPSTASH_REDIS_REST_TOKEN
+const rawUrl = process.env.UPSTASH_REDIS_REST_URL
+const rawToken = process.env.UPSTASH_REDIS_REST_TOKEN
+
+function getBaseUrl(): string {
+  const base = (rawUrl ?? '').trim().replace(/\s+/g, '')
+  if (!base || !base.startsWith('http')) {
+    throw new Error('Missing or invalid UPSTASH_REDIS_REST_URL')
+  }
+  return base.replace(/\/+$/, '')
+}
+
+function getToken(): string {
+  const t = (rawToken ?? '').trim()
+  if (!t) throw new Error('Missing UPSTASH_REDIS_REST_TOKEN')
+  return t
+}
 
 export async function redisGet(key: string): Promise<number> {
-  if (!url || !token) throw new Error('Missing UPSTASH_REDIS_REST_URL or UPSTASH_REDIS_REST_TOKEN')
-  const res = await fetch(`${url}/get/${encodeURIComponent(key)}`, {
+  const base = getBaseUrl()
+  const token = getToken()
+  const res = await fetch(`${base}/get/${encodeURIComponent(key)}`, {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
     cache: 'no-store',
@@ -18,8 +33,9 @@ export async function redisGet(key: string): Promise<number> {
 }
 
 export async function redisIncr(key: string): Promise<number> {
-  if (!url || !token) throw new Error('Missing UPSTASH_REDIS_REST_URL or UPSTASH_REDIS_REST_TOKEN')
-  const res = await fetch(`${url}/incr/${encodeURIComponent(key)}`, {
+  const base = getBaseUrl()
+  const token = getToken()
+  const res = await fetch(`${base}/incr/${encodeURIComponent(key)}`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}` },
     cache: 'no-store',
